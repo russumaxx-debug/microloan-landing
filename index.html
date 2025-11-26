@@ -478,28 +478,43 @@
     </footer>
 
     <script>
-        // Загрузка конфига и применение стилей
-        function loadConfig() {
-            let config = sessionStorage.getItem('loanConfig');
-            if (!config) {
-                config = {
-                    primaryColor: '#667eea',
-                    secondaryColor: '#764ba2',
-                    heroTitle: 'Быстрые займы онлайн',
-                    heroSubtitle: 'Получите до 100,000 леи за 15 минут',
-                    heroButtonText: 'Получить займ',
-                    heroButtonColor: '#ff6b6b',
-                    bannerUrl: 'https://images.unsplash.com/photo-1553729459-d2229ba7433b?w=1200&h=400&fit=crop',
-                    benefits: [
-                        { title: 'Быстрое одобрение', text: 'Ваша заявка обработается за 15 минут' },
-                        { title: 'Без поручителей', text: 'Не нужны гарантии и поручители' },
-                        { title: 'Минимум документов', text: 'Только паспорт и номер телефона' },
-                        { title: 'Круглосуточно', text: 'Подайте заявку в любое время дня' }
-                    ]
-                };
-                sessionStorage.setItem('loanConfig', JSON.stringify(config));
-            } else {
-                config = JSON.parse(config);
+        // Загрузка конфига с GitHub или по умолчанию
+        let ghToken = localStorage.getItem('gh_token');
+        let ghOwner = localStorage.getItem('gh_owner');
+        let ghRepo = localStorage.getItem('gh_repo');
+
+        async function loadConfig() {
+            let config = {
+                primaryColor: '#667eea',
+                secondaryColor: '#764ba2',
+                heroTitle: 'Быстрые займы онлайн',
+                heroSubtitle: 'Получите до 100,000 леи за 15 минут',
+                heroButtonText: 'Получить займ',
+                heroButtonColor: '#ff6b6b',
+                bannerUrl: 'https://images.unsplash.com/photo-1553729459-d2229ba7433b?w=1200&h=400&fit=crop',
+                benefits: [
+                    { title: 'Быстрое одобрение', text: 'Ваша заявка обработается за 15 минут' },
+                    { title: 'Без поручителей', text: 'Не нужны гарантии и поручители' },
+                    { title: 'Минимум документов', text: 'Только паспорт и номер телефона' },
+                    { title: 'Круглосуточно', text: 'Подайте заявку в любое время дня' }
+                ]
+            };
+
+            // Пытаемся загрузить с GitHub
+            if (ghToken && ghOwner && ghRepo) {
+                try {
+                    const response = await fetch(
+                        `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/content.json`,
+                        { headers: { 'Authorization': `token ${ghToken}` } }
+                    );
+                    if (response.ok) {
+                        const data = await response.json();
+                        const ghConfig = JSON.parse(atob(data.content));
+                        config = { ...config, ...ghConfig };
+                    }
+                } catch (error) {
+                    console.log('GitHub не доступен, использую конфиг по умолчанию');
+                }
             }
             return config;
         }
@@ -550,6 +565,13 @@
 
         amountSlider.addEventListener('input', updateCalculator);
         daysSlider.addEventListener('input', updateCalculator);
+
+        // Загрузка конфига и инициализация
+        (async () => {
+            const config = await loadConfig();
+            applyStyles();
+            updateCalculator();
+        })();
 
         // Форма
         function handleFormSubmit(e) {
