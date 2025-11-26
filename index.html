@@ -1,48 +1,23 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Микрозайм</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Hero / Баннер -->
-    <section id="hero">
-        <div class="hero-content">
-            <h1 id="hero-title"></h1>
-            <p id="hero-subtitle"></p>
-            <button id="hero-button"></button>
-        </div>
-    </section>
+<!-- Калькулятор микрозайма -->
+<section id="calculator">
+    <h2>Калькулятор займа</h2>
+    
+    <label>Сумма займа: <span id="loan-amount-display">1000</span> MDL</label>
+    <input type="range" id="loan-amount" min="100" max="10000" step="100" value="1000">
 
-    <!-- Калькулятор микрозайма -->
-    <section id="calculator">
-        <h2>Калькулятор займа</h2>
-        <label>Сумма займа: <input type="number" id="loan-amount" value="1000"></label>
-        <label>Срок (дней): <input type="number" id="loan-days" value="30"></label>
-        <p>К возврату: <span id="loan-result">0</span></p>
-    </section>
+    <label>Срок (дней): <span id="loan-days-display">30</span></label>
+    <input type="range" id="loan-days" min="1" max="90" step="1" value="30">
 
-    <!-- Секция преимуществ -->
-    <section id="benefits">
-        <h2>Наши преимущества</h2>
-        <ul id="benefits-list">
-            <!-- Тут будут пункты через JS -->
-        </ul>
-    </section>
-
-    <!-- Форма заявки -->
-    <section id="application">
-        <h2>Оформить заявку</h2>
-        <form id="loan-form">
-            <input type="text" name="name" placeholder="Ваше имя" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="tel" name="phone" placeholder="Телефон" required>
-            <button type="submit">Отправить</button>
-        </form>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    <p>К возврату: <span id="loan-result">0</span> MDL</p>
+</section>
+<!-- Форма заявки -->
+<section id="application">
+    <h2>Оформить заявку</h2>
+    <form id="loan-form">
+        <input type="text" name="surname" placeholder="Фамилия" required>
+        <input type="text" name="name" placeholder="Имя" required>
+        <input type="text" name="id_number" placeholder="Идентификационный номер" required>
+        <input type="tel" name="phone" placeholder="Номер телефона" required>
+        <button type="submit">Отправить</button>
+    </form>
+</section>
