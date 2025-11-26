@@ -1,23 +1,154 @@
-<!-- Калькулятор микрозайма -->
-<section id="calculator">
-    <h2>Калькулятор займа</h2>
-    
-    <label>Сумма займа: <span id="loan-amount-display">1000</span> MDL</label>
-    <input type="range" id="loan-amount" min="100" max="10000" step="100" value="1000">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Микрозайм</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        section {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        #hero {
+            background-image: url('https://via.placeholder.com/1200x400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        #hero button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        #calculator input[type=range] {
+            width: 100%;
+        }
+        #calculator label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        #application form input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #application form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            #hero {
+                padding: 60px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
 
-    <label>Срок (дней): <span id="loan-days-display">30</span></label>
-    <input type="range" id="loan-days" min="1" max="90" step="1" value="30">
+    <!-- Hero / Баннер -->
+    <section id="hero">
+        <h1 id="hero-title">Возьмите микрозайм быстро!</h1>
+        <p id="hero-subtitle">Без справок и поручителей</p>
+        <button id="hero-button">Оформить заявку</button>
+    </section>
 
-    <p>К возврату: <span id="loan-result">0</span> MDL</p>
-</section>
-<!-- Форма заявки -->
-<section id="application">
-    <h2>Оформить заявку</h2>
-    <form id="loan-form">
-        <input type="text" name="surname" placeholder="Фамилия" required>
-        <input type="text" name="name" placeholder="Имя" required>
-        <input type="text" name="id_number" placeholder="Идентификационный номер" required>
-        <input type="tel" name="phone" placeholder="Номер телефона" required>
-        <button type="submit">Отправить</button>
-    </form>
-</section>
+    <!-- Калькулятор микрозайма -->
+    <section id="calculator">
+        <h2>Калькулятор займа</h2>
+        
+        <label>Сумма займа: <span id="loan-amount-display">1000</span> MDL</label>
+        <input type="range" id="loan-amount" min="100" max="10000" step="100" value="1000">
+
+        <label>Срок (дней): <span id="loan-days-display">30</span></label>
+        <input type="range" id="loan-days" min="1" max="90" step="1" value="30">
+
+        <p>К возврату: <span id="loan-result">0</span> MDL</p>
+    </section>
+
+    <!-- Преимущества -->
+    <section id="benefits">
+        <h2>Наши преимущества</h2>
+        <ul id="benefits-list">
+            <li>Быстрое оформление</li>
+            <li>Без справок</li>
+            <li>Онлайн расчет</li>
+        </ul>
+    </section>
+
+    <!-- Форма заявки -->
+    <section id="application">
+        <h2>Оформить заявку</h2>
+        <form id="loan-form">
+            <input type="text" name="surname" placeholder="Фамилия" required>
+            <input type="text" name="name" placeholder="Имя" required>
+            <input type="text" name="id_number" placeholder="Идентификационный номер" required>
+            <input type="tel" name="phone" placeholder="Номер телефона" required>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const amountSlider = document.getElementById("loan-amount");
+            const daysSlider = document.getElementById("loan-days");
+            const amountDisplay = document.getElementById("loan-amount-display");
+            const daysDisplay = document.getElementById("loan-days-display");
+            const result = document.getElementById("loan-result");
+
+            function calculateLoan() {
+                let amount = parseFloat(amountSlider.value);
+                let days = parseInt(daysSlider.value);
+                let total = amount + (amount * 0.005 * days); // 0.5% в день
+                result.textContent = total.toFixed(2);
+            }
+
+            amountSlider.addEventListener("input", () => {
+                amountDisplay.textContent = amountSlider.value;
+                calculateLoan();
+            });
+
+            daysSlider.addEventListener("input", () => {
+                daysDisplay.textContent = daysSlider.value;
+                calculateLoan();
+            });
+
+            amountDisplay.textContent = amountSlider.value;
+            daysDisplay.textContent = daysSlider.value;
+            calculateLoan();
+
+            // Заглушка для формы (выведет данные в консоль)
+            const form = document.getElementById("loan-form");
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const data = new FormData(form);
+                console.log(Object.fromEntries(data.entries()));
+                alert("Форма отправлена! Данные появятся в консоли (позже можно подключить TG или почту).");
+            });
+        });
+    </script>
+
+</body>
+</html>
