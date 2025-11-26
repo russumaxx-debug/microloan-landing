@@ -767,8 +767,13 @@
             document.getElementById('saveBtn').disabled = true;
 
             try {
-                const content = btoa(JSON.stringify(config, null, 2));
-                const method = window.ghFileData ? 'PUT' : 'PUT';
+                // Кодируем строку с поддержкой UTF-8
+                const jsonString = JSON.stringify(config, null, 2);
+                const encoder = new TextEncoder();
+                const data = encoder.encode(jsonString);
+                const binary = String.fromCharCode.apply(null, data);
+                const content = btoa(binary);
+                
                 const sha = window.ghFileData?.sha;
 
                 const response = await fetch(
