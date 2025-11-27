@@ -586,7 +586,7 @@
                 const owner = userData.login;
 
                 // Получаем первый репозиторий пользователя
-                const reposResponse = await fetch(`https://api.github.com/user/repos?per_page=1&sort=updated`, {
+                const reposResponse = await fetch(`https://api.github.com/user/repos?per_page=100&sort=updated&type=owner`, {
                     headers: { 'Authorization': `token ${token}` }
                 });
 
@@ -595,11 +595,15 @@
                 }
 
                 const repos = await reposResponse.json();
+                console.log('Все репо:', repos);
+                
                 if (repos.length === 0) {
                     throw new Error('У вас нет репозиториев. Создайте репозиторий на GitHub');
                 }
 
+                // Берем первый репо (не файл)
                 const repo = repos[0].name;
+                console.log('Выбран репо:', repo);
 
                 ghConfig = { token, owner, repo, configFile: 'content.json' };
                 localStorage.setItem('gh_token', token);
