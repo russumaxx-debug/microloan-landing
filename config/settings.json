@@ -1,0 +1,43 @@
+{
+  "colors": {
+    "primary": "#3B82F6",
+    "secondary": "#1E40AF",
+    "accent": "#10B981",
+    "background": "#F9FAFB",
+    "text": "#111827"
+  },
+  "fonts": {
+    "main": "Roboto, sans-serif",
+    "headings": "Montserrat, sans-serif"
+  },
+  "hero": {
+    "title": "Возьми займ быстро и удобно",
+    "subtitle": "До 50 000 ₽ за 5 минут",
+    "button": "Получить деньги",
+    "image": "https://images.unsplash.com/photo-1553729459-d2229ba7433b?w=1200&h=400&fit=crop"
+  },
+  "loan": {
+    "minAmount": 1000,
+    "maxAmount": 50000,
+    "minDays": 5,
+    "maxDays": 30,
+    "percentPerDay": 1.2
+  },
+  "sections": [
+    {
+      "type": "features",
+      "title": "Почему выбирают нас",
+      "items": [
+        {"icon": "⏱️", "text": "Одобрение за 5 минут"},
+        {"icon": "🔒", "text": "Безопасность данных"},
+        {"icon": "📱", "text": "Онлайн подача заявки"},
+        {"icon": "💰", "text": "Минимум документов"}
+      ]
+    }
+  ],
+  "footer": {
+    "company": "MyZaim Corp",
+    "email": "support@myzaim.com",
+    "address": "Россия, Москва"
+  }
+}
