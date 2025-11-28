@@ -5,7 +5,7 @@
   "heroSubtitle": "Получите до 100,000 леи за 15 минут",
   "heroButtonText": "Получить займ",
   "heroButtonColor": "#ff6b6b",
-  "bannerUrl": "https://example.com/banner.jpg",
+  "bannerUrl": "https://images.unsplash.com/photo-1553729459-d2229ba7433b?w=1200&h=400&fit=crop",
   "benefits": [
     { "title": "Быстрое одобрение", "text": "Ваша заявка обработается за 15 минут" },
     { "title": "Без поручителей", "text": "Не нужны гарантии и поручители" },
