@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<title>Админ-панель MyZaim</title>
+<title>Админ-панель MyZaim777</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -111,6 +111,13 @@
 </div>
 
 <script>
+// Функция для правильной декодировки Base64 UTF-8
+function decodeBase64Utf8(base64) {
+    const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+    const decoder = new TextDecoder('utf-8');
+    return decoder.decode(bytes);
+}
+
 async function loadConfig() {
     const token = document.getElementById("token").value.trim();
     const owner = document.getElementById("owner").value.trim();
@@ -130,9 +137,12 @@ async function loadConfig() {
     const file = await response.json();
     window.sha = file.sha;
 
-    const config = JSON.parse(atob(file.content));
+    // Декодируем Base64 в UTF-8
+    const configText = decodeBase64Utf8(file.content);
+    const config = JSON.parse(configText);
     window.currentConfig = config;
 
+    // Заполняем поля админки
     document.getElementById("primaryColor").value = config.primaryColor;
     document.getElementById("secondaryColor").value = config.secondaryColor;
     document.getElementById("heroTitle").value = config.heroTitle;
@@ -141,32 +151,17 @@ async function loadConfig() {
     document.getElementById("heroButtonColor").value = config.heroButtonColor;
     document.getElementById("bannerUrl").value = config.bannerUrl;
 
-    // Исправленный блок для преимуществ с корректной кодировкой
     const benefitsBlock = document.getElementById("benefits");
     benefitsBlock.innerHTML = "";
     config.benefits.forEach((b, i) => {
-        const div = document.createElement("div");
-        div.className = "benefit-item";
-
-        const labelTitle = document.createElement("label");
-        labelTitle.textContent = "Название";
-        div.appendChild(labelTitle);
-
-        const inputTitle = document.createElement("input");
-        inputTitle.id = `benefit_title_${i}`;
-        inputTitle.value = b.title;
-        div.appendChild(inputTitle);
-
-        const labelText = document.createElement("label");
-        labelText.textContent = "Описание";
-        div.appendChild(labelText);
-
-        const textareaText = document.createElement("textarea");
-        textareaText.id = `benefit_text_${i}`;
-        textareaText.textContent = b.text;
-        div.appendChild(textareaText);
-
-        benefitsBlock.appendChild(div);
+        benefitsBlock.innerHTML += `
+            <div class="benefit-item">
+                <label>Название</label>
+                <input id="benefit_title_${i}" value="${b.title}">
+                <label>Описание</label>
+                <textarea id="benefit_text_${i}">${b.text}</textarea>
+            </div>
+        `;
     });
 
     document.getElementById("editor").style.display = "block";
@@ -194,7 +189,8 @@ async function saveConfig() {
 
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/config.json`;
 
-    const content = btoa(JSON.stringify(updated, null, 2));
+    // Кодируем UTF-8 в Base64 перед отправкой
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(updated, null, 2))));
 
     const response = await fetch(url, {
         method: "PUT",
