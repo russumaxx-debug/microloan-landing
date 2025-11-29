@@ -141,32 +141,33 @@ async function loadConfig() {
     document.getElementById("heroButtonColor").value = config.heroButtonColor;
     document.getElementById("bannerUrl").value = config.bannerUrl;
 
+    // Исправленный блок для преимуществ с корректной кодировкой
     const benefitsBlock = document.getElementById("benefits");
-benefitsBlock.innerHTML = "";
-config.benefits.forEach((b, i) => {
-    const div = document.createElement("div");
-    div.className = "benefit-item";
+    benefitsBlock.innerHTML = "";
+    config.benefits.forEach((b, i) => {
+        const div = document.createElement("div");
+        div.className = "benefit-item";
 
-    const labelTitle = document.createElement("label");
-    labelTitle.textContent = "Название";
-    div.appendChild(labelTitle);
+        const labelTitle = document.createElement("label");
+        labelTitle.textContent = "Название";
+        div.appendChild(labelTitle);
 
-    const inputTitle = document.createElement("input");
-    inputTitle.id = `benefit_title_${i}`;
-    inputTitle.value = b.title;
-    div.appendChild(inputTitle);
+        const inputTitle = document.createElement("input");
+        inputTitle.id = `benefit_title_${i}`;
+        inputTitle.value = b.title;
+        div.appendChild(inputTitle);
 
-    const labelText = document.createElement("label");
-    labelText.textContent = "Описание";
-    div.appendChild(labelText);
+        const labelText = document.createElement("label");
+        labelText.textContent = "Описание";
+        div.appendChild(labelText);
 
-    const textareaText = document.createElement("textarea");
-    textareaText.id = `benefit_text_${i}`;
-    textareaText.textContent = b.text; // важное изменение
-    div.appendChild(textareaText);
+        const textareaText = document.createElement("textarea");
+        textareaText.id = `benefit_text_${i}`;
+        textareaText.textContent = b.text;
+        div.appendChild(textareaText);
 
-    benefitsBlock.appendChild(div);
-});
+        benefitsBlock.appendChild(div);
+    });
 
     document.getElementById("editor").style.display = "block";
 }
