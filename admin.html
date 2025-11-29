@@ -142,17 +142,31 @@ async function loadConfig() {
     document.getElementById("bannerUrl").value = config.bannerUrl;
 
     const benefitsBlock = document.getElementById("benefits");
-    benefitsBlock.innerHTML = "";
-    config.benefits.forEach((b, i) => {
-        benefitsBlock.innerHTML += `
-            <div class="benefit-item">
-                <label>Название</label>
-                <input id="benefit_title_${i}" value="${b.title}">
-                <label>Описание</label>
-                <textarea id="benefit_text_${i}">${b.text}</textarea>
-            </div>
-        `;
-    });
+benefitsBlock.innerHTML = "";
+config.benefits.forEach((b, i) => {
+    const div = document.createElement("div");
+    div.className = "benefit-item";
+
+    const labelTitle = document.createElement("label");
+    labelTitle.textContent = "Название";
+    div.appendChild(labelTitle);
+
+    const inputTitle = document.createElement("input");
+    inputTitle.id = `benefit_title_${i}`;
+    inputTitle.value = b.title;
+    div.appendChild(inputTitle);
+
+    const labelText = document.createElement("label");
+    labelText.textContent = "Описание";
+    div.appendChild(labelText);
+
+    const textareaText = document.createElement("textarea");
+    textareaText.id = `benefit_text_${i}`;
+    textareaText.textContent = b.text; // важное изменение
+    div.appendChild(textareaText);
+
+    benefitsBlock.appendChild(div);
+});
 
     document.getElementById("editor").style.display = "block";
 }
