@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Админ-панель MyZaim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 700px;
+        margin: 25px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+        margin-top: 0;
+        text-align: center;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 20px;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+    textarea {
+        min-height: 60px;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #2563eb;
+        border: none;
+        color: #fff;
+        border-radius: 6px;
+        margin-top: 30px;
+        font-size: 18px;
+        transition: 0.2s;
+    }
+    button:hover {
+        background: #1e40af;
+    }
+
+    .benefit-item {
+        background: #eee;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>⚙ Админ-панель MyZaim</h1>
+
+    <label>GitHub Token</label>
+    <input id="token" type="text" placeholder="ghp_xxxxxxxxxxxxxxxxxxx">
+
+    <label>GitHub Owner</label>
+    <input id="owner" type="text" placeholder="Имя пользователя">
+
+    <label>GitHub Repo</label>
+    <input id="repo" type="text" placeholder="Название репозитория">
+
+    <button onclick="loadConfig()">Загрузить конфиг</button>
+
+    <div id="editor" style="display:none;">
+
+        <label>Primary Color</label>
+        <input id="primaryColor">
+
+        <label>Secondary Color</label>
+        <input id="secondaryColor">
+
+        <label>Заголовок</label>
+        <input id="heroTitle">
+
+        <label>Подзаголовок</label>
+        <textarea id="heroSubtitle"></textarea>
+
+        <label>Текст кнопки</label>
+        <input id="heroButtonText">
+
+        <label>Цвет кнопки</label>
+        <input id="heroButtonColor">
+
+        <label>URL баннера</label>
+        <input id="bannerUrl">
+
+        <h2>Преимущества</h2>
+        <div id="benefits"></div>
+
+        <button onclick="saveConfig()">💾 Сохранить конфиг</button>
+    </div>
+</div>
+
+<script>
+async function loadConfig() {
+    const token = document.getElementById("token").value.trim();
+    const owner = document.getElementById("owner").value.trim();
+    const repo  = document.getElementById("repo").value.trim();
+
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/config.json`;
+
+    const response = await fetch(url, {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (!response.ok) {
+        alert("Ошибка загрузки: проверь токен/репо");
+        return;
+    }
+
+    const file = await response.json();
+    window.sha = file.sha;
+
+    const config = JSON.parse(atob(file.content));
+    window.currentConfig = config;
+
+    document.getElementById("primaryColor").value = config.primaryColor;
+    document.getElementById("secondaryColor").value = config.secondaryColor;
+    document.getElementById("heroTitle").value = config.heroTitle;
+    document.getElementById("heroSubtitle").value = config.heroSubtitle;
+    document.getElementById("heroButtonText").value = config.heroButtonText;
+    document.getElementById("heroButtonColor").value = config.heroButtonColor;
+    document.getElementById("bannerUrl").value = config.bannerUrl;
+
+    const benefitsBlock = document.getElementById("benefits");
+    benefitsBlock.innerHTML = "";
+    config.benefits.forEach((b, i) => {
+        benefitsBlock.innerHTML += `
+            <div class="benefit-item">
+                <label>Название</label>
+                <input id="benefit_title_${i}" value="${b.title}">
+                <label>Описание</label>
+                <textarea id="benefit_text_${i}">${b.text}</textarea>
+            </div>
+        `;
+    });
+
+    document.getElementById("editor").style.display = "block";
+}
+
+async function saveConfig() {
+    const token = document.getElementById("token").value.trim();
+    const owner = document.getElementById("owner").value.trim();
+    const repo  = document.getElementById("repo").value.trim();
+
+    let updated = { ...window.currentConfig };
+
+    updated.primaryColor = document.getElementById("primaryColor").value;
+    updated.secondaryColor = document.getElementById("secondaryColor").value;
+    updated.heroTitle = document.getElementById("heroTitle").value;
+    updated.heroSubtitle = document.getElementById("heroSubtitle").value;
+    updated.heroButtonText = document.getElementById("heroButtonText").value;
+    updated.heroButtonColor = document.getElementById("heroButtonColor").value;
+    updated.bannerUrl = document.getElementById("bannerUrl").value;
+
+    updated.benefits = updated.benefits.map((b, i) => ({
+        title: document.getElementById(`benefit_title_${i}`).value,
+        text: document.getElementById(`benefit_text_${i}`).value
+    }));
+
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/config.json`;
+
+    const content = btoa(JSON.stringify(updated, null, 2));
+
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: "Update config.json",
+            content: content,
+            sha: window.sha
+        })
+    });
+
+    if (response.ok) {
+        alert("Конфиг успешно сохранён!");
+    } else {
+        alert("Ошибка сохранения!");
+    }
+}
+</script>
+
+</body>
+</html>
