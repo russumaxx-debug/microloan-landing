@@ -8,9 +8,10 @@
 :root {
     --primary-color: #667eea;
     --secondary-color: #764ba2;
+    --background-color: #fff;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#333;background:#fff;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#333;background:var(--background-color);}
 .navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.08);position:sticky;top:0;z-index:100}
 .logo{font-size:1.5rem;font-weight:700;color:var(--primary-color)}
 .admin-btn{padding:.5rem 1rem;background:var(--secondary-color);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem;transition:opacity .3s}
@@ -43,6 +44,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .benefit-icon{font-size:2.5rem;margin-bottom:1rem;display:inline-block}
 .benefit-title{font-size:1.1rem;font-weight:700;color:#333;margin-bottom:.5rem}
 .benefit-text{color:#666;font-size:.95rem}
+.how-it-works{padding:4rem 2rem;background:#fff}
+.how-content{max-width:800px;margin:0 auto;font-size:1rem;color:#333;line-height:1.6}
 .form-section{padding:4rem 2rem;background:#f8f9fa}
 .form-container{max-width:500px;margin:0 auto;background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
 .form-group{margin-bottom:1.5rem}
@@ -93,6 +96,13 @@ footer{background:#1a1a1a;color:white;padding:2rem;text-align:center}
     <div class="benefits-grid" id="benefitsGrid"></div>
 </section>
 
+<section class="how-it-works">
+    <h2 class="section-title" id="howTitle">Как это работает</h2>
+    <div id="howContent" class="how-content">
+        <p>Описание процесса...</p>
+    </div>
+</section>
+
 <section class="form-section">
     <h2 class="section-title">Подайте заявку</h2>
     <div class="form-container">
@@ -120,7 +130,7 @@ footer{background:#1a1a1a;color:white;padding:2rem;text-align:center}
 </footer>
 
 <script>
-let currency = "MDL"; // дефолт
+let currency = "MDL";
 
 async function loadConfig() {
     try {
@@ -132,25 +142,27 @@ async function loadConfig() {
         return { 
             primaryColor:'#667eea',
             secondaryColor:'#764ba2',
+            backgroundColor:'#fff',
             heroTitle:'Быстрые займы онлайн',
             heroSubtitle:'Получите до 100,000',
             heroButtonText:'Получить займ',
             heroButtonColor:'#ff6b6b',
             bannerUrl:'',
             currency:"MDL",
-            backgroundColor:"#ffffff",
-            benefits:[]
+            benefits:[],
+            howTitle:"Как это работает",
+            howContent:"<p>Описание процесса...</p>"
         };
     }
 }
 
 function applyConfig(config){
     currency = config.currency || "MDL";
-    document.body.style.backgroundColor = config.backgroundColor || "#ffffff";
 
     const root=document.documentElement;
     root.style.setProperty('--primary-color',config.primaryColor);
     root.style.setProperty('--secondary-color',config.secondaryColor);
+    root.style.setProperty('--background-color',config.backgroundColor || '#fff');
 
     document.getElementById('heroTitle').textContent=config.heroTitle;
     document.getElementById('heroSubtitle').textContent=config.heroSubtitle;
@@ -170,6 +182,9 @@ function applyConfig(config){
             <div class="benefit-text">${b.text}</div>
         </div>
     `).join('');
+
+    document.getElementById('howTitle').textContent = config.howTitle || "Как это работает";
+    document.getElementById('howContent').innerHTML = config.howContent || "<p>Описание процесса...</p>";
 }
 
 const amountSlider=document.getElementById('amountSlider');
@@ -178,6 +193,7 @@ const daysSlider=document.getElementById('daysSlider');
 function updateCalculator(){
     const amount=parseInt(amountSlider.value);
     const days=parseInt(daysSlider.value);
+
     const commission=amount*0.005*days;
     const total=amount+commission;
 
@@ -208,9 +224,7 @@ function handleFormSubmit(e){
 }
 
 function goToAdmin(){ alert('Админ-панель пока не готова'); }
-function scrollToForm(){ 
-    document.querySelector('.form-section').scrollIntoView({behavior:'smooth'});
-}
+function scrollToForm(){ document.querySelector('.form-section').scrollIntoView({behavior:'smooth'}); }
 
 (async()=>{
     const config=await loadConfig();
