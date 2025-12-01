@@ -5,57 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>МикроЗайм - Быстрые займы онлайн</title>
 <style>
-    :root {
-        --primary-color: #667eea;
-        --secondary-color: #764ba2;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#333;background:#fff}
-    .navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.08);position:sticky;top:0;z-index:100}
-    .logo{font-size:1.5rem;font-weight:700;color:var(--primary-color)}
-    .admin-btn{padding:.5rem 1rem;background:var(--secondary-color);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem;transition:opacity .3s}
-    .admin-btn:hover{opacity:.9}
-    .hero{position:relative;min-height:400px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-    .hero-banner{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:.8}
-    .hero-content{position:relative;z-index:2;text-align:center;color:white;padding:2rem;max-width:600px}
-    .hero-title{font-size:2.5rem;font-weight:700;margin-bottom:1rem;text-shadow:0 2px 4px rgba(0,0,0,.2)}
-    .hero-subtitle{font-size:1.2rem;margin-bottom:2rem;opacity:.95;text-shadow:0 1px 2px rgba(0,0,0,.2)}
-    .hero-btn{padding:1rem 2.5rem;font-size:1rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .3s;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-    .hero-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
-    .calculator{padding:4rem 2rem;max-width:800px;margin:0 auto;background:#f8f9fa}
-    .section-title{font-size:2rem;font-weight:700;margin-bottom:3rem;text-align:center;color:var(--primary-color)}
-    .calc-container{background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
-    .calc-field{margin-bottom:2rem}
-    .calc-label{display:flex;justify-content:space-between;margin-bottom:.8rem;font-weight:600;color:#333}
-    .calc-value{font-size:1.3rem;color:var(--primary-color);font-weight:700}
-    .calc-slider{width:100%;height:6px;border-radius:3px;background:#ddd;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer}
-    .calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:var(--primary-color);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
-    .calc-slider::-webkit-slider-thumb:hover{transform:scale(1.2)}
-    .calc-slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--primary-color);cursor:pointer;border:none;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
-    .calc-slider::-moz-range-thumb:hover{transform:scale(1.2)}
-    .calc-result{margin-top:2rem;padding:1.5rem;background:linear-gradient(135deg,var(--primary-color) 0%,var(--secondary-color) 100%);color:white;border-radius:8px;text-align:center}
-    .result-label{font-size:.9rem;opacity:.9;margin-bottom:.5rem}
-    .result-value{font-size:2rem;font-weight:700}
-    .benefits{padding:4rem 2rem;background:white}
-    .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
-    .benefit-card{padding:2rem;background:#f8f9fa;border-radius:12px;text-align:center;transition:all .3s;border:2px solid transparent}
-    .benefit-card:hover{border-color:var(--primary-color);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-    .benefit-icon{font-size:2.5rem;margin-bottom:1rem;display:inline-block}
-    .benefit-title{font-size:1.1rem;font-weight:700;color:#333;margin-bottom:.5rem}
-    .benefit-text{color:#666;font-size:.95rem}
-    .form-section{padding:4rem 2rem;background:#f8f9fa}
-    .form-container{max-width:500px;margin:0 auto;background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
-    .form-group{margin-bottom:1.5rem}
-    .form-label{display:block;margin-bottom:.5rem;font-weight:600;color:#333}
-    .form-input{width:100%;padding:.8rem;border:2px solid #ddd;border-radius:6px;font-size:1rem;transition:border-color .3s;font-family:inherit}
-    .form-input:focus{outline:none;border-color:var(--primary-color)}
-    .submit-btn{width:100%;padding:1rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s}
-    .submit-btn:hover{opacity:.9;transform:translateY(-2px)}
-    .form-message{padding:1rem;margin-top:1rem;border-radius:6px;text-align:center;display:none}
-    .form-message.success{background:#d4edda;color:#155724;display:block}
-    footer{background:#1a1a1a;color:white;padding:2rem;text-align:center}
-    @media(max-width:768px){.hero-title{font-size:1.8rem}.hero-subtitle{font-size:1rem}.section-title{font-size:1.5rem}.hero-btn{padding:.8rem 2rem;font-size:.95rem}.navbar{padding:1rem}.logo{font-size:1.2rem}}
-    @media(max-width:480px){.hero{min-height:300px}.hero-title{font-size:1.5rem}.hero-subtitle{font-size:.9rem}.calc-container{padding:1.5rem}.form-container{padding:1.5rem}}
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#333;background:#fff;}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.08);position:sticky;top:0;z-index:100}
+.logo{font-size:1.5rem;font-weight:700;color:var(--primary-color)}
+.admin-btn{padding:.5rem 1rem;background:var(--secondary-color);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem;transition:opacity .3s}
+.admin-btn:hover{opacity:.9}
+.hero{position:relative;min-height:400px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+.hero-banner{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:.8}
+.hero-content{position:relative;z-index:2;text-align:center;color:white;padding:2rem;max-width:600px}
+.hero-title{font-size:2.5rem;font-weight:700;margin-bottom:1rem;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+.hero-subtitle{font-size:1.2rem;margin-bottom:2rem;opacity:.95;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.hero-btn{padding:1rem 2.5rem;font-size:1rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .3s;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.hero-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.calculator{padding:4rem 2rem;max-width:800px;margin:0 auto;background:#f8f9fa}
+.section-title{font-size:2rem;font-weight:700;margin-bottom:3rem;text-align:center;color:var(--primary-color)}
+.calc-container{background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.calc-field{margin-bottom:2rem}
+.calc-label{display:flex;justify-content:space-between;margin-bottom:.8rem;font-weight:600;color:#333}
+.calc-value{font-size:1.3rem;color:var(--primary-color);font-weight:700}
+.calc-slider{width:100%;height:6px;border-radius:3px;background:#ddd;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:var(--primary-color);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.calc-slider::-webkit-slider-thumb:hover{transform:scale(1.2)}
+.calc-slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--primary-color);cursor:pointer;border:none;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .2s}
+.calc-slider::-moz-range-thumb:hover{transform:scale(1.2)}
+.calc-result{margin-top:2rem;padding:1.5rem;background:linear-gradient(135deg,var(--primary-color) 0%,var(--secondary-color) 100%);color:white;border-radius:8px;text-align:center}
+.result-label{font-size:.9rem;opacity:.9;margin-bottom:.5rem}
+.result-value{font-size:2rem;font-weight:700}
+.benefits{padding:4rem 2rem;background:white}
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.benefit-card{padding:2rem;background:#f8f9fa;border-radius:12px;text-align:center;transition:all .3s;border:2px solid transparent}
+.benefit-card:hover{border-color:var(--primary-color);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.benefit-icon{font-size:2.5rem;margin-bottom:1rem;display:inline-block}
+.benefit-title{font-size:1.1rem;font-weight:700;color:#333;margin-bottom:.5rem}
+.benefit-text{color:#666;font-size:.95rem}
+.form-section{padding:4rem 2rem;background:#f8f9fa}
+.form-container{max-width:500px;margin:0 auto;background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.form-group{margin-bottom:1.5rem}
+.form-label{display:block;margin-bottom:.5rem;font-weight:600;color:#333}
+.form-input{width:100%;padding:.8rem;border:2px solid #ddd;border-radius:6px;font-size:1rem;transition:border-color .3s;font-family:inherit}
+.form-input:focus{outline:none;border-color:var(--primary-color)}
+.submit-btn{width:100%;padding:1rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s}
+.submit-btn:hover{opacity:.9;transform:translateY(-2px)}
+.form-message{padding:1rem;margin-top:1rem;border-radius:6px;text-align:center;display:none}
+.form-message.success{background:#d4edda;color:#155724;display:block}
+footer{background:#1a1a1a;color:white;padding:2rem;text-align:center}
+@media(max-width:768px){.hero-title{font-size:1.8rem}.hero-subtitle{font-size:1rem}.section-title{font-size:1.5rem}.hero-btn{padding:.8rem 2rem;font-size:.95rem}.navbar{padding:1rem}.logo{font-size:1.2rem}}
+@media(max-width:480px){.hero{min-height:300px}.hero-title{font-size:1.5rem}.hero-subtitle{font-size:.9rem}.calc-container{padding:1.5rem}.form-container{padding:1.5rem}}
 </style>
 </head>
 <body>
@@ -77,23 +77,14 @@
     <h2 class="section-title">Рассчитайте займ</h2>
     <div class="calc-container">
         <div class="calc-field">
-            <div class="calc-label">
-                <span>Сумма займа</span>
-                <span class="calc-value" id="amountValue">10,000</span>
-            </div>
+            <div class="calc-label"><span>Сумма займа</span><span class="calc-value" id="amountValue">10,000 леи</span></div>
             <input type="range" id="amountSlider" class="calc-slider" min="1000" max="100000" value="10000" step="1000">
         </div>
         <div class="calc-field">
-            <div class="calc-label">
-                <span>Срок (дни)</span>
-                <span class="calc-value" id="daysValue">30 дн.</span>
-            </div>
+            <div class="calc-label"><span>Срок (дни)</span><span class="calc-value" id="daysValue">30 дн.</span></div>
             <input type="range" id="daysSlider" class="calc-slider" min="1" max="365" value="30" step="1">
         </div>
-        <div class="calc-result">
-            <div class="result-label">К возврату</div>
-            <div class="result-value" id="resultAmount">10,150</div>
-        </div>
+        <div class="calc-result"><div class="result-label">К возврату</div><div class="result-value" id="resultAmount">10,150 леи</div></div>
     </div>
 </section>
 
@@ -147,6 +138,7 @@ async function loadConfig() {
             heroButtonColor:'#ff6b6b',
             bannerUrl:'',
             currency:"MDL",
+            backgroundColor:"#ffffff",
             benefits:[]
         };
     }
@@ -154,6 +146,7 @@ async function loadConfig() {
 
 function applyConfig(config){
     currency = config.currency || "MDL";
+    document.body.style.backgroundColor = config.backgroundColor || "#ffffff";
 
     const root=document.documentElement;
     root.style.setProperty('--primary-color',config.primaryColor);
@@ -185,7 +178,6 @@ const daysSlider=document.getElementById('daysSlider');
 function updateCalculator(){
     const amount=parseInt(amountSlider.value);
     const days=parseInt(daysSlider.value);
-
     const commission=amount*0.005*days;
     const total=amount+commission;
 
