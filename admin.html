@@ -87,6 +87,9 @@
 
         <label>Secondary Color</label>
         <input id="secondaryColor" type="color">
+        
+        <label>Цвет фона</label>
+        <input id="backgroundColor" type="color">
 
         <label>Заголовок</label>
         <input id="heroTitle">
@@ -191,6 +194,7 @@ async function saveConfig() {
     updated.heroButtonColor = document.getElementById("heroButtonColor").value;
     updated.bannerUrl = document.getElementById("bannerUrl").value;
     updated.currency = document.getElementById("currency").value;
+    updated.backgroundColor = document.getElementById("backgroundColor").value;
 
     updated.benefits = updated.benefits.map((b, i) => ({
         title: document.getElementById(`benefit_title_${i}`).value,
