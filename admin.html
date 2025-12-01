@@ -158,6 +158,7 @@ async function loadConfig() {
     document.getElementById("heroButtonText").value = config.heroButtonText;
     document.getElementById("heroButtonColor").value = config.heroButtonColor;
     document.getElementById("bannerUrl").value = config.bannerUrl;
+    document.getElementById("currency").value = config.currency || "MDL";
 
     const benefitsBlock = document.getElementById("benefits");
     benefitsBlock.innerHTML = "";
@@ -189,6 +190,7 @@ async function saveConfig() {
     updated.heroButtonText = document.getElementById("heroButtonText").value;
     updated.heroButtonColor = document.getElementById("heroButtonColor").value;
     updated.bannerUrl = document.getElementById("bannerUrl").value;
+    updated.currency = document.getElementById("currency").value;
 
     updated.benefits = updated.benefits.map((b, i) => ({
         title: document.getElementById(`benefit_title_${i}`).value,
