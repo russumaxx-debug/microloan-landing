@@ -77,14 +77,23 @@
     <h2 class="section-title">Рассчитайте займ</h2>
     <div class="calc-container">
         <div class="calc-field">
-            <div class="calc-label"><span>Сумма займа</span><span class="calc-value" id="amountValue">10,000 леи</span></div>
+            <div class="calc-label">
+                <span>Сумма займа</span>
+                <span class="calc-value" id="amountValue">10,000</span>
+            </div>
             <input type="range" id="amountSlider" class="calc-slider" min="1000" max="100000" value="10000" step="1000">
         </div>
         <div class="calc-field">
-            <div class="calc-label"><span>Срок (дни)</span><span class="calc-value" id="daysValue">30 дн.</span></div>
+            <div class="calc-label">
+                <span>Срок (дни)</span>
+                <span class="calc-value" id="daysValue">30 дн.</span>
+            </div>
             <input type="range" id="daysSlider" class="calc-slider" min="1" max="365" value="30" step="1">
         </div>
-        <div class="calc-result"><div class="result-label">К возврату</div><div class="result-value" id="resultAmount">10,150 леи</div></div>
+        <div class="calc-result">
+            <div class="result-label">К возврату</div>
+            <div class="result-value" id="resultAmount">10,150</div>
+        </div>
     </div>
 </section>
 
@@ -120,6 +129,8 @@
 </footer>
 
 <script>
+let currency = "MDL"; // дефолт
+
 async function loadConfig() {
     try {
         const response = await fetch('config.json');
@@ -127,11 +138,23 @@ async function loadConfig() {
         return await response.json();
     } catch(e) {
         console.error(e);
-        return { primaryColor:'#667eea', secondaryColor:'#764ba2', heroTitle:'Быстрые займы онлайн', heroSubtitle:'Получите до 100,000 леи за 15 минут', heroButtonText:'Получить займ', heroButtonColor:'#ff6b6b', bannerUrl:'', benefits:[] };
+        return { 
+            primaryColor:'#667eea',
+            secondaryColor:'#764ba2',
+            heroTitle:'Быстрые займы онлайн',
+            heroSubtitle:'Получите до 100,000',
+            heroButtonText:'Получить займ',
+            heroButtonColor:'#ff6b6b',
+            bannerUrl:'',
+            currency:"MDL",
+            benefits:[]
+        };
     }
 }
 
 function applyConfig(config){
+    currency = config.currency || "MDL";
+
     const root=document.documentElement;
     root.style.setProperty('--primary-color',config.primaryColor);
     root.style.setProperty('--secondary-color',config.secondaryColor);
@@ -162,11 +185,18 @@ const daysSlider=document.getElementById('daysSlider');
 function updateCalculator(){
     const amount=parseInt(amountSlider.value);
     const days=parseInt(daysSlider.value);
+
     const commission=amount*0.005*days;
     const total=amount+commission;
-    document.getElementById('amountValue').textContent=amount.toLocaleString('ru-RU')+' леи';
-    document.getElementById('daysValue').textContent=days+' дн.';
-    document.getElementById('resultAmount').textContent=Math.round(total).toLocaleString('ru-RU')+' леи';
+
+    document.getElementById('amountValue').textContent =
+        amount.toLocaleString('ru-RU') + " " + currency;
+
+    document.getElementById('daysValue').textContent =
+        days + " дн.";
+
+    document.getElementById('resultAmount').textContent =
+        Math.round(total).toLocaleString('ru-RU') + " " + currency;
 }
 
 amountSlider.addEventListener('input',updateCalculator);
@@ -186,9 +216,15 @@ function handleFormSubmit(e){
 }
 
 function goToAdmin(){ alert('Админ-панель пока не готова'); }
-function scrollToForm(){ document.querySelector('.form-section').scrollIntoView({behavior:'smooth'}); }
+function scrollToForm(){ 
+    document.querySelector('.form-section').scrollIntoView({behavior:'smooth'});
+}
 
-(async()=>{ const config=await loadConfig(); applyConfig(config); updateCalculator(); })();
+(async()=>{
+    const config=await loadConfig();
+    applyConfig(config);
+    updateCalculator();
+})();
 </script>
 </body>
 </html>
